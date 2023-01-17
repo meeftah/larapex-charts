@@ -10,7 +10,7 @@
             fontFamily: '{!! $chart->fontFamily() !!}',
             foreColor: '{!! $chart->foreColor() !!}',
             sparkline: {!! $chart->sparkline() !!},
-            stacked: {!! $chart->stacked() !!}
+            stacked: {!! $chart->stacked() ? 'true' : 'false' !!}
         },
         plotOptions: {
             bar: {!! $chart->horizontal() !!}
