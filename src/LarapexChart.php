@@ -31,6 +31,7 @@ class LarapexChart
     protected $xAxis;
     protected $grid;
     protected $markers;
+    protected $stacked = false;
     protected $stroke;
     protected $toolbar;
     protected $zoom;
@@ -255,6 +256,12 @@ class LarapexChart
         return $this;
     }
 
+    public function setStacked(bool $stacked): LarapexChart
+    {
+        $this->stacked = $stacked;
+        return $this;
+    }
+
     public function setSparkline(bool $enabled = true): LarapexChart
     {
         $this->sparkline = json_encode(['enabled' => $enabled]);
@@ -458,6 +465,14 @@ class LarapexChart
     }
 
     /**
+     * @return false|boolean
+     */
+    public function stacked()
+    {
+        return $this->stacked;
+    }
+
+    /**
      * @return true|boolean
      */
     public function sparkline()
@@ -483,6 +498,7 @@ class LarapexChart
                 'fontFamily' => json_decode($this->fontFamily()),
                 'foreColor' => $this->foreColor(),
                 'sparkline' => $this->sparkline(),
+                'stacked' => $this->stacked() ? 'true' : 'false',
             ],
             'plotOptions' => [
                 'bar' => json_decode($this->horizontal()),
@@ -528,6 +544,7 @@ class LarapexChart
                 'fontFamily' => json_decode($this->fontFamily()),
                 'foreColor' => $this->foreColor(),
                 'sparkline' => json_decode($this->sparkline()),
+                'stacked' => $this->stacked()? 'true' : 'false',
             ],
             'plotOptions' => [
                 'bar' => json_decode($this->horizontal()),
