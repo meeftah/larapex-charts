@@ -1,6 +1,5 @@
 <script>
-    var options =
-    {
+    var options = {
         chart: {
             type: '{!! $chart->type() !!}',
             height: {!! $chart->height() !!},
@@ -18,7 +17,7 @@
         colors: {!! $chart->colors() !!},
         series: {!! $chart->dataset() !!},
         dataLabels: {!! $chart->dataLabels() !!},
-        @if($chart->labels())
+        @if ($chart->labels())
             labels: {!! json_encode($chart->labels(), true) !!},
         @endif
         title: {
@@ -30,16 +29,18 @@
             align: '{!! $chart->subtitlePosition() !!}'
         },
         xaxis: {
-            categories: {!! $chart->xAxis() !!}
+            categories: {!! $chart->xAxis() !!},
+            labels: {
+                style: {!! $chart->xAxisStyle() !!}
+            },
         },
         grid: {!! $chart->grid() !!},
         markers: {!! $chart->markers() !!},
-        @if($chart->stroke())
+        @if ($chart->stroke())
             stroke: {!! $chart->stroke() !!},
         @endif
     }
 
     var chart = new ApexCharts(document.querySelector("#{!! $chart->id() !!}"), options);
     chart.render();
-
 </script>

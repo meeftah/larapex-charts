@@ -29,6 +29,7 @@ class LarapexChart
     protected $colors;
     protected $horizontal;
     protected $xAxis;
+    protected $xAxisStyle;
     protected $grid;
     protected $markers;
     protected $stacked;
@@ -52,6 +53,7 @@ class LarapexChart
         $this->horizontal = json_encode(['horizontal' => false]);
         $this->colors = json_encode(config('larapex-charts.colors'));
         $this->setXAxis([]);
+        $this->setXAxisStyle();
         $this->grid = json_encode(['show' => false]);
         $this->markers = json_encode(['show' => false]);
         $this->toolbar = json_encode(['show' => false]);
@@ -197,6 +199,16 @@ class LarapexChart
     public function setXAxis(array $categories) :LarapexChart
     {
         $this->xAxis = json_encode($categories);
+        return $this;
+    }
+
+    public function setXAxisStyle(int $fontSize = 14, int $fontWeight = 400): LarapexChart
+    {
+        $this->xAxisStyle = json_encode([
+            'fontSize' => "$fontSize".'px',
+            'fontWeight' => $fontWeight,
+        ]);
+
         return $this;
     }
 
@@ -430,6 +442,14 @@ class LarapexChart
     }
 
     /**
+     * @return mixed
+     */
+    public function xAxisStyle()
+    {
+        return $this->xAxisStyle;
+    }
+
+    /**
      * @return false|string
      */
     public function grid()
@@ -537,6 +557,9 @@ class LarapexChart
             ],
             'xaxis' => [
                 'categories' => json_decode($this->xAxis()),
+                'labels' => [
+                    'style' => json_decode($this->xAxisStyle()),
+                ],
             ],
             'grid' => json_decode($this->grid()),
             'markers' => json_decode($this->markers()),
@@ -583,6 +606,9 @@ class LarapexChart
             ],
             'xaxis' => [
                 'categories' => json_decode($this->xAxis()),
+                'labels' => [
+                    'style' => json_decode($this->xAxisStyle()),
+                ],
             ],
             'grid' => json_decode($this->grid()),
             'markers' => json_decode($this->markers()),
