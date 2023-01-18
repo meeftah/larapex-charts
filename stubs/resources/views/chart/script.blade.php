@@ -24,6 +24,7 @@
         title: {
             text: "{!! $chart->title() !!}"
         },
+        legend: {!! $chart->legend() !!},
         subtitle: {
             text: '{!! $chart->subtitle() !!}',
             align: '{!! $chart->subtitlePosition() !!}'

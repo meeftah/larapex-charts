@@ -32,6 +32,7 @@ class LarapexChart
     protected $grid;
     protected $markers;
     protected $stacked;
+    protected $legend;
     protected $stroke;
     protected $toolbar;
     protected $zoom;
@@ -58,6 +59,7 @@ class LarapexChart
         $this->dataLabels = json_encode(['enabled' => false]);
         $this->sparkline = json_encode(['enabled' => false]);
         $this->stacked = false;
+        $this->legend = json_encode(['position' => 'bottom']);
         $this->fontFamily = config('larapex-charts.font_family');
         $this->foreColor = config('larapex-charts.font_color');
         return $this;
@@ -260,6 +262,16 @@ class LarapexChart
     public function setStacked(bool $stacked): LarapexChart
     {
         $this->stacked = $stacked;
+        return $this;
+    }
+
+    public function setLegend(bool $show = true, $position = 'bottom'): LarapexChart
+    {
+        $this->legend = json_encode([
+            'show' => $show,
+            'position' => $position,
+        ]);
+
         return $this;
     }
 
@@ -474,6 +486,14 @@ class LarapexChart
     }
 
     /**
+     * @return false|string
+     */
+    public function legend()
+    {
+        return $this->legend;
+    }
+
+    /**
      * @return true|boolean
      */
     public function sparkline()
@@ -510,6 +530,7 @@ class LarapexChart
             'title' => [
                 'text' => $this->title()
             ],
+            'legend' => json_decode($this->legend()),
             'subtitle' => [
                 'text' => $this->subtitle() ? $this->subtitle() : '',
                 'align' => $this->subtitlePosition() ? $this->subtitlePosition() : '',
@@ -555,6 +576,7 @@ class LarapexChart
             'title' => [
                 'text' => $this->title()
             ],
+            'legend' => json_decode($this->legend()),
             'subtitle' => [
                 'text' => $this->subtitle() ? $this->subtitle() : '',
                 'align' => $this->subtitlePosition() ? $this->subtitlePosition() : '',
